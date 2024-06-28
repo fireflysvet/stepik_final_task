@@ -34,6 +34,7 @@ def browser(request):
 
     yield driver
 
+    print("\nclose browser...")
     driver.quit()
 
 
