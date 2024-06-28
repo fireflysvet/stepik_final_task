@@ -17,8 +17,8 @@ class ProductPage(BasePage):
         assert self.is_element_present(*ProductPageLocators.SUCCESSFUL_ALERT), "There are no successful alert"
 
     def should_be_book_name_in_alert(self, name):
-        successful_alerts = [i.text for i in self.browser.find_elements(*ProductPageLocators.SUCCESSFUL_ALERT)]
-        assert any([name in i for i in successful_alerts]), "There is no book name in alert"
+        successful_alerts = [i.text for i in self.browser.find_elements(*ProductPageLocators.BOOK_NAME_IN_ALERT)]
+        assert any([name==i for i in successful_alerts]), "There is no book name in alert"
 
     def should_be_alert_with_cart_price(self):
         assert self.is_element_present(*ProductPageLocators.CART_ALERT), "There is no alert with cart price"
