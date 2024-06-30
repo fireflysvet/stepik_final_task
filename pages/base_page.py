@@ -1,11 +1,16 @@
 import math
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
+from selenium.common.exceptions import TimeoutException
+
 
 class BasePage():
     def __init__(self, browser, url, timeout=10):
         self.browser = browser
         self.url = url
+        #add implicitly wait
         self.browser.implicitly_wait(timeout)
 
     def open(self):
@@ -18,6 +23,25 @@ class BasePage():
             return False
         return True
 
+    def is_not_element_present(self, how, what, timeout=4):
+        #set implicitly wait to 0sec
+        self.browser.implicitly_wait(0)
+        try:
+            #use explicitly wait
+            WebDriverWait(self.browser, timeout).until(EC.presence_of_element_located((how, what)))
+        except TimeoutException:
+            return True
+        return False
+
+    def is_disappeared(self, how, what, timeout=4):
+        # set implicitly wait to 0sec
+        self.browser.implicitly_wait(0)
+        try:
+            # use explicitly wait
+            WebDriverWait(self.browser, timeout).until_not(EC.presence_of_element_located((how, what)))
+        except TimeoutException:
+            return False
+        return True
     def solve_quiz_and_get_code(self):
         alert = self.browser.switch_to.alert
         x = alert.text.split(" ")[2]
