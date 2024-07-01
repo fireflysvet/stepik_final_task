@@ -2,6 +2,12 @@ from selenium.webdriver.common.by import By
 
 class BasePageLocators():
     LOGIN_LINK = (By.CSS_SELECTOR, '#login_link')
+    BASKET = (By.CSS_SELECTOR, '.basket-mini>.btn-group>a')
+
+class BasketPageLocators():
+    BASKET_PRODUCTS = (By.CSS_SELECTOR, "#basket_formset")
+    BASKET_EMPTY_MESSAGE = (By.CSS_SELECTOR, "#content_inner>p")
+
 class MainPageLocators():
     pass
 
