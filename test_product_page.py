@@ -1,4 +1,5 @@
 import pytest
+import time
 from .pages.product_page import ProductPage
 from .pages.login_page import LoginPage
 from .pages.basket_page import BasketPage
@@ -70,3 +71,33 @@ def test_guest_cant_see_product_in_basket_opened_from_product_page(browser):
     basket = BasketPage(browser, browser.current_url)
     basket.should_not_be_products()
     basket.should_be_message_that_basket_is_empty()
+
+class TestUserAddToBasketFromProductPage():
+
+    @pytest.fixture(scope="function", autouse=True)
+    def setup(self, browser):
+        link = "http://selenium1py.pythonanywhere.com/accounts/login/"
+        registration_page = LoginPage(browser, link)
+        registration_page.open()
+        email = str(time.time()) + "@fakemail.org"
+        password = str(time.time())
+        registration_page.register_new_user(email, password)
+        registration_page.should_be_authorized_user()
+
+    def test_user_cant_see_success_message(self, browser):
+        link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207"
+        page = ProductPage(browser, link)
+        page.open()
+        page.should_not_be_success_message()
+
+    def test_user_can_add_product_to_basket(self, browser):
+        link = " http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207"
+        page = ProductPage(browser, link)
+        page.open()
+        book_name = page.book_name()
+        book_price = page.book_price()
+        page.add_to_cart()
+        page.should_be_successful_add_alert()
+        page.should_be_book_name_in_alert(book_name)
+        page.should_be_alert_with_cart_price()
+        page.should_be_correct_price_in_alert(book_price)
