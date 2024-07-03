@@ -8,8 +8,7 @@ def pytest_addoption(parser):
     parser.addoption('--browser_name',
                      action='store',
                      default='chrome',
-                     help='Choose browser: Chrome or Firefox',
-                     choices=("chrome", "firefox"))
+                     help='Choose browser: Chrome or Firefox')
 
 
 @pytest.fixture(scope="function")
@@ -30,7 +29,7 @@ def browser(request):
         options.set_preference("intl.accept_languages", language)
         driver = webdriver.Firefox(options=options)
     else:
-        raise pytest.UsageError("--browser_name should be chrome or firefox")
+        raise pytest.UsageError("--browser_name should be chrome or firefox, default browser is chrome")
 
     yield driver
 
