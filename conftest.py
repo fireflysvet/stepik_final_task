@@ -3,6 +3,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options as COptions
 from selenium.webdriver.firefox.options import Options as FOptions
 
+
 def pytest_addoption(parser):
     parser.addoption('--language', action='store', default='en', help='Choose language of the page')
     parser.addoption('--browser_name',
@@ -15,8 +16,6 @@ def pytest_addoption(parser):
 def browser(request):
     browser_name = request.config.getoption("browser_name")
     language = request.config.getoption("language")
-
-    driver = None
 
     if browser_name == 'chrome':
         print("\nstart chrome browser for test...")
@@ -35,5 +34,3 @@ def browser(request):
 
     print("\nclose browser...")
     driver.quit()
-
-

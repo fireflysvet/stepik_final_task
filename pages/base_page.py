@@ -7,11 +7,11 @@ from selenium.common.exceptions import NoAlertPresentException
 from selenium.common.exceptions import TimeoutException
 
 
-class BasePage():
+class BasePage:
     def __init__(self, browser, url, timeout=10):
         self.browser = browser
         self.url = url
-        #add implicitly wait
+        # add implicitly wait
         self.browser.implicitly_wait(timeout)
 
     def go_to_login_page(self):
@@ -30,10 +30,10 @@ class BasePage():
         return True
 
     def is_not_element_present(self, how, what, timeout=4):
-        #set implicitly wait to 0sec
+        # set implicitly wait to 0sec
         self.browser.implicitly_wait(0)
         try:
-            #use explicitly wait
+            # use explicitly wait
             WebDriverWait(self.browser, timeout).until(EC.presence_of_element_located((how, what)))
         except TimeoutException:
             return True
